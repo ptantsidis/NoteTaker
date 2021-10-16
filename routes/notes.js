@@ -14,11 +14,11 @@ notes.get('/', (req,res) => {
 });
 
 //get specific note
-notes.get('/:noteId', (req, res) => {
+notes.get('/:Id', (req, res) => {
     readFromFile('./db/notes.json')
     .then((data) => res.json(JSON.parse(data))
      .then((json => {
-         const result = json.filter((note) =>  note.noteId===noteId);
+         const result = json.filter((note) =>  note.Id===Id);
          return result.length > 0
          ? res.json(result)
          :res.json('No note with that ID');
@@ -29,12 +29,12 @@ notes.get('/:noteId', (req, res) => {
   notes.post('/', (req,res) => {
     console.log(req.body);
 
-    const {  title, text, noteId, } = req.body;
+    const {  title, text, Id, } = req.body;
     if (req.body) {
         const newNote = {
             title,
             text,
-            noteId: uuidv4(),
+            Id: uuidv4(),
         };
         // readAndAppend(newNote, './db/notes.json');
         userNotesList.push(newNote)
@@ -52,17 +52,24 @@ notes.get('/:noteId', (req, res) => {
  });
   
 //delete specific note
-notes.delete('/api/notes/:noteId', (req,res) => {
-    const note_Id = req.params.noteId;
-    readFromFile('./db/notes.json')
-    .then((data) => JSON.parse(data))
-    .then((json) => {
+notes.delete('/:Id', (req,res) => {
+    const note_Id = req.params.Id;
+    // readFromFile('./db/notes.json')
+    // .then((data) => JSON.parse(data))
+    // .then((json) => {
         // make a new array of all tips except this one
-        const result = json.filter((note) => note.noteID !== note_Id);
-
-        writeToFile('./db/notes.json', result);
-        res.json(`Item ${note_Id} has been deleted 🗑️`);
-    });
+        const result = userNotesList.filter((note) => note.Id != note_Id);
+        userNotesList = result;
+        console.log(result,"Records after delete");
+        fs.writeFileSync("./db/notes.json",JSON.stringify(userNotesList),function(err,result){
+            if(err) throw err;
+            console.log("Data",result)
+        })
+        console.log("Delete",userNotesList)
+        res.json(userNotesList)        
+        // writeToFile('./db/notes.json', result);
+        // res.json(`Item ${note_Id} has been deleted 🗑️`);
+    // });
 });
 
 module.exports = notes;
