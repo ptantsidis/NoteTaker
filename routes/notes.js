@@ -40,24 +40,15 @@ notes.get('/:Id', (req, res) => {
         userNotesList.push(newNote)
         fs.writeFileSync("./db/notes.json",JSON.stringify(userNotesList),function(err,result){
             if(err) throw err;
-            console.log("Data",result)
         })
         console.log("POST",userNotesList)
         res.json(userNotesList)
-    //     writeToFile(userNotesList)
-    //             res.json(`Note Added🚀`);
-    // } else {
-    //     res.error('Note in Error')
     }     
  });
   
 //delete specific note
 notes.delete('/:Id', (req,res) => {
     const note_Id = req.params.Id;
-    // readFromFile('./db/notes.json')
-    // .then((data) => JSON.parse(data))
-    // .then((json) => {
-        // make a new array of all tips except this one
         const result = userNotesList.filter((note) => note.Id != note_Id);
         userNotesList = result;
         console.log(result,"Records after delete");
@@ -67,9 +58,6 @@ notes.delete('/:Id', (req,res) => {
         })
         console.log("Delete",userNotesList)
         res.json(userNotesList)        
-        // writeToFile('./db/notes.json', result);
-        // res.json(`Item ${note_Id} has been deleted 🗑️`);
-    // });
 });
 
 module.exports = notes;
