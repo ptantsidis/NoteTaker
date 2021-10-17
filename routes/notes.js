@@ -9,7 +9,6 @@ notes.get('/', (req,res) => {
     readFromFile('./db/notes.json').then((data) => 
     {
         userNotesList =JSON.parse(data) || []
-        console.log("Get",userNotesList)
         res.json(JSON.parse(data))});
 });
 
@@ -27,8 +26,6 @@ notes.get('/:Id', (req, res) => {
 
   //new note
   notes.post('/', (req,res) => {
-    console.log(req.body);
-
     const {  title, text, Id, } = req.body;
     if (req.body) {
         const newNote = {
@@ -36,12 +33,10 @@ notes.get('/:Id', (req, res) => {
             text,
             Id: uuidv4(),
         };
-        // readAndAppend(newNote, './db/notes.json');
         userNotesList.push(newNote)
         fs.writeFileSync("./db/notes.json",JSON.stringify(userNotesList),function(err,result){
             if(err) throw err;
         })
-        console.log("POST",userNotesList)
         res.json(userNotesList)
     }     
  });
@@ -51,12 +46,9 @@ notes.delete('/:Id', (req,res) => {
     const note_Id = req.params.Id;
         const result = userNotesList.filter((note) => note.Id != note_Id);
         userNotesList = result;
-        console.log(result,"Records after delete");
         fs.writeFileSync("./db/notes.json",JSON.stringify(userNotesList),function(err,result){
             if(err) throw err;
-            console.log("Data",result)
         })
-        console.log("Delete",userNotesList)
         res.json(userNotesList)        
 });
 
