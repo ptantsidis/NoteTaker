@@ -57,6 +57,5 @@ ____
   https://glacial-chamber-34023.herokuapp.com/
 
   ### Images  
-  https://user-images.githubusercontent.com/90045665/137599460-18af5fea-a8ad-4251-a857-dc319b1c62b8.png
-(/NoteTaker/Assets/noteTaker_ss.png)
-![noteTaker_ss](https://user-images.githubusercontent.com/90045665/137599460-18af5fea-a8ad-4251-a857-dc319b1c62b8.png)
+  (/NoteTaker/Assets/noteTaker_ss.png)
+  ![noteTaker_ss](https://user-images.githubusercontent.com/90045665/137599460-18af5fea-a8ad-4251-a857-dc319b1c62b8.png)
